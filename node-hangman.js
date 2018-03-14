@@ -69,25 +69,25 @@ function ScoreBoard() {
         for (var i = 0; i < this.lines; i++) {
             console.log('\r\n');
         }
-        console.log(chalk.rgb(188, 143, 143)('      ------------------------------------------'));
-        console.log(chalk.rgb(188, 143, 143)(`     |             ${chalk.yellow("WELCOME TO HANGMAN")}           |`));
-        console.log(chalk.rgb(188, 143, 143)('     |------------------------------------------|'));
-        console.log(chalk.rgb(188, 143, 143)(`     |            ${chalk.green("WINS")}     |    ${chalk.red("LOSSES")}          |`));
-        console.log(chalk.rgb(188, 143, 143)('     |---------------------|--------------------|'));
-        console.log(chalk.rgb(188, 143, 143)(`     |             ${chalk.green(this.won)}       |     ${chalk.red(this.lost)}`));
-        console.log(chalk.rgb(188, 143, 143)(`     |------------------------------------------|`));
-        console.log(chalk.rgb(188, 143, 143)(`     |       ${chalk.yellow("MISSED LETTERS:")}   ${chalk.red(this.missedLetter)}`));
-        console.log(chalk.rgb(188, 143, 143)(`     |------------------------------------------|`));
-        console.log(chalk.rgb(188, 143, 143)('     |                                          |'));
-        console.log(chalk.rgb(188, 143, 143)('     |                                          |'));
-        console.log(chalk.rgb(188, 143, 143)(`     |    ${chalk.yellow("Guess the word realated to weather")}    |`));
-        console.log(chalk.rgb(188, 143, 143)('     |                                          |'));
-        console.log(chalk.rgb(188, 143, 143)(`     |              ${chalk.yellow(this.dashes)}`));
-        console.log(chalk.rgb(188, 143, 143)('     |                                          |'));
-        console.log(chalk.rgb(188, 143, 143)('     |                                          |'));
-        console.log(chalk.rgb(188, 143, 143)('     |------------------------------------------|'));
-        console.log(chalk.rgb(188, 143, 143)(`     |        ${this.status}`));
-        console.log(chalk.rgb(188, 143, 143)('      ------------------------------------------'));
+        console.log('      ------------------------------------------');
+        console.log(`     |             ${chalk.yellow("WELCOME TO HANGMAN")}           |`);
+        console.log('     |------------------------------------------|');
+        console.log(`     |            ${chalk.green("WINS")}     |    ${chalk.red("LOSSES")}          |`);
+        console.log('     |---------------------|--------------------|');
+        console.log(`     |             ${chalk.green(this.won)}       |     ${chalk.red(this.lost)}`);
+        console.log(`     |------------------------------------------|`);
+        console.log(`     |       ${chalk.yellow("MISSED LETTERS:")}   ${chalk.red(this.missedLetter)}`);
+        console.log(`     |------------------------------------------|`);
+        console.log('     |                                          |');
+        console.log('     |                                          |');
+        console.log(`     |    ${chalk.yellow("Guess the word realated to weather")}    |`);
+        console.log('     |                                          |');
+        console.log(`     |              ${chalk.yellow(this.dashes)}`);
+        console.log('     |                                          |');
+        console.log('     |                                          |');
+        console.log('     |------------------------------------------|');
+        console.log(`     |        ${this.status}`);
+        console.log('      ------------------------------------------');
         for (var i = 0; i < this.lines / 8; i++) {
             console.log('\r\n');
         }
@@ -133,9 +133,12 @@ function ScoreBoard() {
                         WeatherScore.dashes = WeatherDashes.dashes;
                     }
                     // give loop1 a name to break it later
-                    for (let i = 0; i < Weather.randomWord.length; i++) {
+                    loop1: for (let i = 0; i < Weather.randomWord.length; i++) {
                         //if guess is not equal and i equals the length of randomword - 1
-                        if ((userGuess !== Weather.randomWord[i]) && (i === (Weather.randomWord.length - 1))) {
+                        if (userGuess !== Weather.randomWord[i]) {
+                            break loop1;
+                        }
+                        else if (i === (Weather.randomWord.length - 1)) {
 
                             WeatherScore.missedLetter = WeatherScore.missedLetter.replaceAt(numTries, userGuess);
                             WeatherScore.status = chalk.red("     WRONG!!!");
@@ -148,9 +151,6 @@ function ScoreBoard() {
                                 WeatherScore.randomWord = Weather.randomWord;
                                 console.log(WeatherScore.randomWord);
                                 WeatherScore.dashes = WeatherDashes.dashes;
-                                WeatherDashes.dashes;
-                                WeatherScore.dashes;
-                                WeatherScore.score;
                                 numTries = 0;
                             }
                             numTries++;
