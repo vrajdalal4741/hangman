@@ -109,6 +109,7 @@ function ScoreBoard() {
                             WeatherScore.askForLetter();
                         }
                     }
+                    //
                     let dash = RegExp("_");
                     if (!dash.test(WeatherScore.dashes)) {
                         WeatherScore.won++;
