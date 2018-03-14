@@ -13,7 +13,7 @@ var guessWords = ["rainy", "windy", "sunny", "freezing", "humid", "dry", "cloudy
 
 //numTries is the number of tries
 //starts at -1 because the first the thing you do is add 1
-let numTries = -1;
+let numTries = 0;
 
 let Weather = new Word(guessWords);
 let WeatherDashes = new DashesFx(Weather);
@@ -133,15 +133,14 @@ function ScoreBoard() {
                         WeatherScore.dashes = WeatherDashes.dashes;
                     }
                     // give loop1 a name to break it later
-                    loop1: for (let i = 0; i < Weather.randomWord.length; i++) {
-                        if (userGuess == Weather.randomWord[i]) {
-                            break loop1;
-                        } else if (i === (Weather.randomWord.length - 1)) {
-                            numTries++;
+                    for (let i = 0; i < Weather.randomWord.length; i++) {
+                        //if guess is not equal and i equals the length of randomword - 1
+                        if ((userGuess !== Weather.randomWord[i]) && (i === (Weather.randomWord.length - 1))) {
+
                             WeatherScore.missedLetter = WeatherScore.missedLetter.replaceAt(numTries, userGuess);
                             WeatherScore.status = chalk.red("     WRONG!!!");
                             if (numTries === 3) {
-                                WeatherScore.lost;                                
+                                WeatherScore.lost++;                              
                                 WeatherScore.status = chalk.red("YOU LOST!!! Word was " + WeatherScore.randomWord);
                                 WeatherScore.missedLetter = "";
                                 Weather = new Word(guessWords);
@@ -152,8 +151,9 @@ function ScoreBoard() {
                                 WeatherDashes.dashes;
                                 WeatherScore.dashes;
                                 WeatherScore.score;
-                                numTries = -1;
+                                numTries = 0;
                             }
+                            numTries++;
                         }
                     }
                     WeatherScore.score();
