@@ -4,17 +4,17 @@
 // creating variables to hold libraires
 // prompt-input is a question/answer
 var Input = require('prompt-input');
-var inquirer = require('inquirer');
+//inquirer has more selection thann prompt-input: type, list, input, message, 
 const chalk = require('chalk');
+// change colors for node
 
 
 var guessWords = ["rainy", "windy", "sunny", "freezing", "humid", "dry", "cloudy"];
 
 //numTries is the number of tries
+//starts at -1 because the first the thing you do is add 1
 let numTries = -1;
 
-// constructor which can be used to create objects with the ".raining", ".noise",
-// and ".makenoise" properties
 let Weather = new Word(guessWords);
 let WeatherDashes = new DashesFx(Weather);
 let WeatherScore = new ScoreBoard(Weather);
@@ -100,30 +100,39 @@ function ScoreBoard() {
             Game.run().then(function(answers) {
                 //creating a variable to collect answers
                     let userGuess = answers;
-
-                    //
+                    //loop through random word in Weather Score
                     for (let i = 0; i < WeatherScore.randomWord.length; i++) {
+                        // compare each guess to a letter in random word
                         if (userGuess == WeatherScore.randomWord[i]) {
+                            //redefining weatherscore.dashes after each correct guess
                             WeatherScore.dashes = WeatherScore.dashes.replaceAt(i * 2, userGuess);
                             WeatherScore.status = chalk.green("     CORRECT!!!");
+                            //asks for another letter if it is
                             WeatherScore.askForLetter();
                         }
                     }
-                    //
+                    // RegExp(search) is very powerful; very complex: let dash equal a regular expression;
+                    // helps you search in dashes; look up Reg Exp 101
                     let dash = RegExp("_");
+                    //if there are no dashes; .test() searches if there are any dashes;
                     if (!dash.test(WeatherScore.dashes)) {
+                        //you win if theres no dashes
                         WeatherScore.won++;
                         WeatherScore.status = chalk.green("YOU WON!!! Word was " + WeatherScore.randomWord);
+                        //.missedLetter = empty string
                         WeatherScore.missedLetter = "";
+                        // new random word
                         Weather = new Word(guessWords);
+                        // new dashes for new word
                         WeatherDashes = new DashesFx(Weather);
+                        //pass random word to scoreboard
                         WeatherScore.randomWord = Weather.randomWord;
+                        // print the word
                         console.log(WeatherScore.randomWord);
+                        // 
                         WeatherScore.dashes = WeatherDashes.dashes;
-                        WeatherDashes.dashes;
-                        WeatherScore.dashes;
                     }
-
+                    // give loop1 a name to break it later
                     loop1: for (let i = 0; i < Weather.randomWord.length; i++) {
                         if (userGuess == Weather.randomWord[i]) {
                             break loop1;
@@ -132,7 +141,8 @@ function ScoreBoard() {
                             WeatherScore.missedLetter = WeatherScore.missedLetter.replaceAt(numTries, userGuess);
                             WeatherScore.status = chalk.red("     WRONG!!!");
                             if (numTries === 3) {
-                                WeatherScore.lost                                WeatherScore.status = chalk.red("YOU LOST!!! Word was " + WeatherScore.randomWord);
+                                WeatherScore.lost;                                
+                                WeatherScore.status = chalk.red("YOU LOST!!! Word was " + WeatherScore.randomWord);
                                 WeatherScore.missedLetter = "";
                                 Weather = new Word(guessWords);
                                 WeatherDashes = new DashesFx(Weather);
